@@ -42,4 +42,4 @@ jobs:
           #   docker stop nginx-container || true
           #   docker rm nginx-container || true
           #   docker run -d -p 80:80 --name nginx-container nginx
-          commands: whoami
+          command: whoami

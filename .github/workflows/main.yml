@@ -20,6 +20,22 @@ jobs:
         run: npm ci
       - name: Build dependencies
         run: npm run build
+  build-image:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v1
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
   deploy:
     runs-on: ubuntu-latest
 
@@ -32,13 +48,14 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            docker build -t bova-app .
-            docker stop bova-app || true
-            docker rm bova-app || true
-            docker run -d --name bova-app-container bova-app
+          # script: |
+          #   docker build -t bova-app .
+          #   docker stop bova-app || true
+          #   docker rm bova-app || true
+          #   docker run -d --name bova-app-container bova-app
 
-            docker build -t nginx .
-            docker stop nginx-container || true
-            docker rm nginx-container || true
-            docker run -d -p 80:80 --name nginx-container nginx
+          #   docker build -t nginx .
+          #   docker stop nginx-container || true
+          #   docker rm nginx-container || true
+          #   docker run -d -p 80:80 --name nginx-container nginx
+          script: whoami

@@ -22,6 +22,7 @@ jobs:
         run: npm run build
   build-image:
     runs-on: ubuntu-latest
+    needs: build
     
     steps:
       - name: Checkout code
@@ -36,11 +37,12 @@ jobs:
           push: true
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+          tags: ivlay/bova:latest
   deploy:
     runs-on: ubuntu-latest
 
     name: Deploy 🚀
-    needs: build
+    needs: build-image
     steps:
       - name: Deploy to the sever
         uses: appleboy/ssh-action@v1.0.3

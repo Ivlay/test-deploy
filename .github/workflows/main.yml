@@ -5,26 +5,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  # build:
-  #   runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-  #   name: Build ⛏
-  #   steps:
-  #     - name: Set up Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 18
-  #     - name: Checkout repository
-  #       uses: actions/checkout@main
-  #     - name: Install dependencies
-  #       run: npm ci
-  #     - name: Build dependencies
-  #       run: npm run build
+    name: Build ⛏
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+      - name: Checkout repository
+        uses: actions/checkout@main
+      - name: Install dependencies
+        run: npm ci
+      - name: Build dependencies
+        run: npm run build
   deploy:
     runs-on: ubuntu-latest
 
     name: Deploy 🚀
-    # needs: build
+    needs: build
     steps:
       - name: Deploy to the sever
         uses: appleboy/ssh-action@v1.0.3
@@ -32,14 +32,13 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          # script: |
-          #   docker build -t bova-app .
-          #   docker stop bova-app || true
-          #   docker rm bova-app || true
-          #   docker run -d --name bova-app-container bova-app
+          script: |
+            docker build -t bova-app .
+            docker stop bova-app || true
+            docker rm bova-app || true
+            docker run -d --name bova-app-container bova-app
 
-          #   docker build -t nginx .
-          #   docker stop nginx-container || true
-          #   docker rm nginx-container || true
-          #   docker run -d -p 80:80 --name nginx-container nginx
-          script: whoami
+            docker build -t nginx .
+            docker stop nginx-container || true
+            docker rm nginx-container || true
+            docker run -d -p 80:80 --name nginx-container nginx

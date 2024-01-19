@@ -57,4 +57,3 @@ jobs:
             docker stop bova-front || true
             docker rm bova-front || true
             docker run -d --name bova-front ivlay/bova:latest
-          script: whoami

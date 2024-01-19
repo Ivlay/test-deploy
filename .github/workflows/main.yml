@@ -51,14 +51,10 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          # script: |
-          #   docker build -t bova-app .
-          #   docker stop bova-app || true
-          #   docker rm bova-app || true
-          #   docker run -d --name bova-app-container bova-app
-
-          #   docker build -t nginx .
-          #   docker stop nginx-container || true
-          #   docker rm nginx-container || true
-          #   docker run -d -p 80:80 --name nginx-container nginx
+          script: |
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+            docker pull ivlay/bova:latest
+            docker stop bova-front || true
+            docker rm bova-front || true
+            docker run -d --name bova-front ivlay/bova:latest
           script: whoami

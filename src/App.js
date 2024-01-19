@@ -15,7 +15,7 @@ const App = () => {
       <button onClick={decrement}>decrement</button>
 
       <div style={{ display: 'flex', gap: 15 }}>
-        <Link to="about">about</Link>
+        <Link to="about">about page</Link>
       </div>
 
       <Routes>

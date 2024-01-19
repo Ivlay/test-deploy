@@ -21,6 +21,8 @@ jobs:
       - name: Build dependencies
         run: npm run build
   deploy:
+    runs-on: ubuntu-latest
+
     name: Deploy 🚀
     steps:
       - name: Deploy to the sever

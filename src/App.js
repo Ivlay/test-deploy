@@ -20,6 +20,7 @@ const App = () => {
 
       <Routes>
         <Route path="/about" element={<AboutPage />} />
+        <Route path="*" element={<div>Not found</div>} />
       </Routes>
     </div>
   );

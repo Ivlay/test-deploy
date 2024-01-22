@@ -56,4 +56,4 @@ jobs:
             docker pull ivlay/bova:latest
             docker stop bova-front || true
             docker rm bova-front || true
-            docker run --name bova-front -p 443:443 -d ivlay/bova:latest
+            docker run --name bova-front -p 443:443 -p 80:80 -d ivlay/bova:latest

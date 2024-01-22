@@ -12,6 +12,6 @@ COPY .nginx/nginx.conf /etc/nginx/conf.d/default.conf
 COPY .nginx/nginx-selfsigned.crt /etc/nginx/ssl/nginx-selfsigned.crt
 COPY .nginx/nginx-selfsigned.key /etc/nginx/ssl/nginx-selfsigned.key
 
-EXPOSE 443
+EXPOSE 80 443
 
 CMD ["nginx", "-g", "daemon off;"]

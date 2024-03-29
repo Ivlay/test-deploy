@@ -7,6 +7,6 @@ services:
       dockerfile: Dockerfile
     container_name: front-test
     restart: unless-stopped
-    network_mode: "host"
+    network_mode: host
     ports:
       - 3000:80

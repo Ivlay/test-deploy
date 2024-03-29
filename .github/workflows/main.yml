@@ -24,21 +24,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and Push Docker Image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: Dockerfile
-          push: true
-          tags: ivlay/bova:latest
   deploy:
     runs-on: ubuntu-latest
 
@@ -52,8 +37,8 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-            docker pull ivlay/bova:latest
-            docker stop bova-front || true
-            docker rm bova-front || true
-            docker run --name bova-front -p 443:443 -p 80:80 -d ivlay/bova:latest
+            cd ./test-deploy
+            git pull origin main
+            docker stop front-test || true
+            docker rm front-test || true
+            docker-compose up -d

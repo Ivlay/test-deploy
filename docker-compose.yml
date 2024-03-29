@@ -5,36 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: node:18-alpine
-    container_name: front
-    restart: unless-stopped
-    networks:
-      - app-network
-  
-  webserver:
-    image: nginx:alpine
-    container_name: webserver
+    container_name: front-test
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - web-root:/var/www/html
-      - ./nginx-conf:/etc/nginx/conf.d
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-    depends_on:
-      - front
-    networks:
-      - app-network
-  
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-etc:/var/lib/letsencrypt
-      - web-root:/var/www/html
-    depends_on:
-      - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email info@bovapay.io
+      - 3000:80
